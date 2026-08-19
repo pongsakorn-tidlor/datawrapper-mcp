@@ -9,6 +9,11 @@ RUN apt-get update && \
 # Create deployment user and group
 RUN groupadd -g 1234 deploymentgroup && \
     useradd -m -u 1234 -g deploymentgroup deployment
+
+# Create a directory for the .env file as root, since /app (created below
+# by WORKDIR) is root-owned and the non-root deployment user can't write to it
+RUN mkdir -p /app/config
+
 USER deployment
 ENV PATH="/home/deployment/.local/bin:$PATH"
 
@@ -21,9 +26,6 @@ COPY ./deployment /app/deployment
 
 # Install dependencies
 RUN pip install --no-cache-dir -r /app/deployment/requirements.txt
-
-# Create a directory for the .env file
-RUN mkdir -p /app/config
 
 # Expose the server port
 EXPOSE 8080
