@@ -26,11 +26,11 @@ RUN pip install --no-cache-dir -r /app/deployment/requirements.txt
 RUN mkdir -p /app/config
 
 # Expose the server port
-EXPOSE 8501
+EXPOSE 8080
 
 # Set environment variables (can be overridden at runtime)
 ENV MCP_SERVER_HOST="0.0.0.0"
-ENV MCP_SERVER_PORT=8501
+ENV MCP_SERVER_PORT=8080
 ENV MCP_SERVER_NAME="datawrapper-mcp"
 
 # Run the HTTP server
